@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>栈 | Kimi&#39;s Blog</title>
+<meta name="description" content="">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://harryzhou25.github.io/favicon.ico?v=1695113098455">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://harryzhou25.github.io/styles/main.css">
+
+
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://harryzhou25.github.io">Kimi&#39;s Blog</a></h3>
+  </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="https://harryzhou25.github.io/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="https://harryzhou25.github.io/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>栈</h1>
+            <p class="article-meta">
+              2023-09-08
+              
+            </p>
+            
+            <div class="post-content" v-pre>
+              <ul>
+<li>
+<h2 id="定义">定义</h2>
+栈是一种限定仅在表尾进行插入和删除操作的线性表，通常，把允许插入和删除操作的一端成为栈首，另一端称为栈尾。<br>
+既然栈仅可以在表尾进行插入和删除，那么栈又称为先进后出的线性表。</li>
+<li>
+<h2 id="基本操作">基本操作</h2>
+插入元素也叫进栈、压栈和入栈。<br>
+删除元素也叫出栈，也叫弹栈。<br>
+查询栈顶元素</li>
+<li>
+<h2 id="操作实例">操作实例</h2>
+假设要对1，2，3这三个数字依次进栈，然后查询栈顶元素，进行一次弹栈然后再查询栈顶元素<br>
+可以得到如下过程</li>
+</ul>
+<ol>
+<li>依次入栈后栈内元素序列为：3，2，1.</li>
+<li>此时查询栈顶元素，可得栈顶为3.</li>
+<li>弹栈，此时栈内元素序列为2，1.</li>
+<li>查询栈顶元素，可得栈顶为2.</li>
+</ol>
+<ul>
+<li>
+<h3 id="代码实现">代码实现</h3>
+</li>
+</ul>
+<p>C++的 <strong>stack</strong>头文件包含了栈的各种操作以及定义<br>
+我们可以利用其中的函数来完成之前的例子<br>
+代码及细节如下</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;stack&gt;
+using namespace std;
+
+int main(){
+
+    stack&lt;int&gt; s;                     //创建一个栈s，其内部元素类型为int
+    
+    for(int i = 1; i &lt;= 3; i++)       //将数字1，2，3压入栈内
+        s.push(i);                    //s.push(i)是将i压入栈顶
+                                      //s.top()可返回栈顶元素
+    printf(&quot;当前栈顶元素为：%d\n&quot;,s.top());
+
+    s.pop();                          //进行一次弹栈
+
+    printf(&quot;进行一次弹栈后栈顶元素：%d\n&quot;,s.top());
+
+    while(!s.empty())                 //s.empty()用于检测栈是否为空栈 若为空栈返回true
+    {
+        printf(&quot;%d &quot;,s.top());
+        s.pop();
+    }                                 //查看栈内元素及顺序
+    
+    return 0;
+}
+</code></pre>
+<ul>
+<li>
+<h3 id="数组写法">数组写法</h3>
+</li>
+</ul>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+using namespace std;
+
+int pos = 0;
+int s[105];
+
+int top(){
+
+    return s[pos];
+}
+
+bool empty(){
+
+    if(pos)
+        return false;
+    else
+        return true;
+}
+
+void pop(){
+
+    s[pos--] = 0;
+}
+
+void push(int x){
+
+    s[++pos] = x;
+
+}
+
+int main(){
+
+    for(int i = 1; i &lt;= 3; i++)
+        push(i);
+    
+    printf(&quot;当前栈顶元素为：%d\n&quot;,top());
+
+    pop();
+
+    printf(&quot;进行一次弹栈后栈顶元素：%d\n&quot;,top());
+
+    while(!empty())
+    {
+        printf(&quot;%d &quot;,top());
+        pop();
+    }
+    
+    return 0;
+}
+</code></pre>
+
+            </div>
+          </article>
+        </div>
+        <div class="paper" data-aos="fade-in">
+          
+        </div>
+        
+      </div>
+
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://harryzhou25.github.io/images/avatar.png?v=1695113098455" class="no-responsive avatar">
+    <div class="text-muted"></div>
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://harryzhou25.github.io/post/leetcode-847-bfszhuang-ya/">LeetCode 847 BFS+状压</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://harryzhou25.github.io/post/codeforces-edu-round-154/">Codeforces EDU Round 154</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://harryzhou25.github.io/post/bei-bao-wen-ti-hui-zong/">背包问题汇总</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://harryzhou25.github.io/post/shu-zhuang-shu-zu/">树状数组</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://harryzhou25.github.io/post/ke-chi-jiu-hua-xian-duan-shu/">可持久化线段树</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://harryzhou25.github.io/post/xian-duan-shu/">线段树</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://harryzhou25.github.io/post/shu-lian-pou-fen/">树链剖分</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://harryzhou25.github.io/post/quan-zhi-xian-duan-shu/">权值线段树</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://harryzhou25.github.io/post/zhan/">栈</a>
+            </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="https://harryzhou25.github.io/tag/qduXfVGM5/" class="badge secondary">
+          leetcode
+        </a>
+      
+        <a href="https://harryzhou25.github.io/tag/0JGDfEAJW/" class="badge warning">
+          codeforces
+        </a>
+      
+        <a href="https://harryzhou25.github.io/tag/uq4Ur-wl2/" class="badge secondary">
+          动态规划
+        </a>
+      
+        <a href="https://harryzhou25.github.io/tag/X2ypsP-Wy/" class="badge success">
+          数据结构
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://harryzhou25.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+
+
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+</script>
+
+
+
+
+  </body>
+</html>
